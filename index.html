@@ -1871,7 +1871,8 @@
             recommendedGenreName.textContent = genre.charAt(0).toUpperCase() + genre.slice(1);
 
             try {
-                const response = await fetch(`http://${API_HOST}:${API_PORT}/genre_songs/${genre}`);
+                // const response = await fetch(`http://${API_HOST}:${API_PORT}/genre_songs/${genre}`);
+                const response = await fetch(`/genre_songs/${genre}`);
                 const data = await response.json();
 
                 recommendationsLoading.style.display = 'none';
