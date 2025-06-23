@@ -1,0 +1,2 @@
+*.keras filter=lfs diff=lfs merge=lfs -text
+music_genre_classifier.keras filter=lfs diff=lfs merge=lfs -text
