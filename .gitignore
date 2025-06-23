@@ -1,0 +1,58 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual environment
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# TensorFlow/Keras SavedModel (if you ever save in that format locally)
+# Adjust if your .keras model is large and you want to ensure it's tracked
+# but exclude other large model save formats.
+# For now, we WANT music_genre_classifier.keras to be tracked.
+
+# Large dataset - typically not committed to Git if very large
+# If your Data/ folder is huge (many GBs), consider if you really need it in the repo.
+# For deployment, only the .keras model is needed.
+# If it's manageable (e.g., < 100-200MB total repo size), it's fine.
+# Data/
+
+# SQLite database file (if used locally, not for Render deployment with PostgreSQL)
+*.db
+*.sqlite
+*.sqlite3
+tunetag_stats.db
+
+# IDE / Editor specific
+.vscode/
+.idea/
+*.swp
+*~
+
+# macOS
+.DS_Store
