@@ -1,0 +1,15 @@
+.git
+.gitignore
+.vscode
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.cache
+temp/
+Data/
+Music-Genre-Classification/
+*.ipynb
+*.mp3
+*.wav
+frontend.png

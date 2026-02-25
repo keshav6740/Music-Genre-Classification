@@ -98,3 +98,25 @@ keshav6740-smart-music-genre-classification/
 ## 📊 Dataset
 See [`Data/readme.md`](Data/readme.md) for full GTZAN dataset details.
 
+---
+
+## Deploy On Render
+
+This repo now includes:
+- `Dockerfile` (installs Python deps + `ffmpeg`, runs `gunicorn`)
+- `render.yaml` (Render Blueprint for one web service)
+
+### Option 1: Blueprint (recommended)
+1. Push this repo to GitHub.
+2. In Render, choose **New +** -> **Blueprint**.
+3. Select this repo and create the service.
+
+### Option 2: Manual Web Service
+1. In Render, create a **Web Service** from this repo.
+2. Environment: **Docker**.
+3. Render will auto-detect and use the `Dockerfile`.
+
+### Required env vars
+- `PORT` is provided automatically by Render.
+- (Optional) `LASTFM_API_KEY` if you want recommendations enabled.
+

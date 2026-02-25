@@ -1,0 +1,6 @@
+services:
+  - type: web
+    name: deeplearning-music-classifier
+    env: docker
+    plan: free
+    autoDeploy: true

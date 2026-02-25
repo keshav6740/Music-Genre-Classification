@@ -24,7 +24,7 @@ FIXED_TIME_FRAMES = 200 # Must match training
 SAMPLES_PER_SEGMENT = (FIXED_TIME_FRAMES -1) * 512 + 1024 # From your train.py
 
 DATABASE = 'tunetag_stats.db'
-LASTFM_API_KEY = "8a9eea9fbc3a5a01e9f75cd209911386" # Get from https://www.last.fm/api/account/create
+LASTFM_API_KEY = os.environ.get("LASTFM_API_KEY", "") # Set in Render environment
 LASTFM_BASE_URL = "http://ws.audioscrobbler.com/2.0/"
 
 # --- Load Model ---
