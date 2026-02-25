@@ -27,16 +27,26 @@ DATABASE = 'tunetag_stats.db'
 LASTFM_API_KEY = os.environ.get("LASTFM_API_KEY", "") # Set in Render environment
 LASTFM_BASE_URL = "http://ws.audioscrobbler.com/2.0/"
 
-# --- Load Model ---
-try:
-    model = load_model(MODEL_PATH)
-    print(f"✅ Model '{MODEL_PATH}' loaded successfully.")
-except Exception as e:
-    print(f"❌ Error loading model '{MODEL_PATH}': {e}")
-    model = None # Set model to None if loading fails
+# --- Load Model Lazily ---
+model = None
+model_load_error = None
 
-# --- Database Functions ---
-def get_db():
+def get_model():
+    global model, model_load_error
+    if model is not None:
+        return model
+    if model_load_error is not None:
+        return None
+    try:
+        model = load_model(MODEL_PATH)
+        print(f"Model '{MODEL_PATH}' loaded successfully.")
+        return model
+    except Exception as e:
+        model_load_error = str(e)
+        print(f"Error loading model '{MODEL_PATH}': {e}")
+        return None
+
+# --- Database Functions ---def get_db():
     db = getattr(g, '_database', None)
     if db is None:
         db = g._database = sqlite3.connect(DATABASE)
@@ -106,7 +116,8 @@ def index():
 
 @app.route('/predict', methods=['POST'], strict_slashes=False)
 def predict_genre_route():
-    if model is None:
+    loaded_model = get_model()
+    if loaded_model is None:
         return jsonify({'error': 'Model not loaded on server'}), 500
     if 'audio' not in request.files:
         return jsonify({'error': 'No audio file provided'}), 400
@@ -133,7 +144,7 @@ def predict_genre_route():
             return jsonify({'error': 'Could not extract features from audio'}), 500
 
         input_data = np.expand_dims(features, axis=0)
-        predictions = model.predict(input_data, verbose=0)
+        predictions = loaded_model.predict(input_data, verbose=0)
         predicted_index = np.argmax(predictions)
         predicted_genre = GENRES[predicted_index]
         confidence = float(predictions[0][predicted_index]) # Get confidence
@@ -218,3 +229,4 @@ def get_stats_route():
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))
     app.run(host='0.0.0.0', port=port, debug=False)
+
